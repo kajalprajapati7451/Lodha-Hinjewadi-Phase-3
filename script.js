@@ -106,3 +106,145 @@
             });
         });
     });
+      // SIMPLE JAVASCRIPT FOR POPUP FUNCTIONALITY
+    function openPopup() {
+        document.getElementById('popupOverlay').style.display = 'block';
+        document.getElementById('popupForm').style.display = 'block';
+    }
+    
+    function closePopup() {
+        document.getElementById('popupOverlay').style.display = 'none';
+        document.getElementById('popupForm').style.display = 'none';
+    }
+    
+    function openForm(apartmentType) {
+        document.getElementById('popupOverlay').style.display = 'block';
+        document.getElementById('popupForm').style.display = 'block';
+        
+        // If you want to set the selected apartment type inside the form
+        let aptField = document.getElementById('apartmentTypeField');
+        if (aptField) {
+            aptField.value = apartmentType;
+        }
+    }
+
+    // Close popup if user clicks outside form
+    window.onclick = function(event) {
+        let overlay = document.getElementById('popupOverlay');
+        let form = document.getElementById('popupForm');
+        if (event.target === overlay) {
+            overlay.style.display = 'none';
+            form.style.display = 'none';
+        }
+    }
+    // JavaScript for Amenities Row Slider
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('amenitiesSlider');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Scroll amount (based on card width + gap)
+            const scrollAmount = 300; // Adjust as needed
+            
+            // Next button event
+            nextBtn.addEventListener('click', function() {
+                slider.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Previous button event
+            prevBtn.addEventListener('click', function() {
+                slider.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Enable/disable buttons based on scroll position
+            function updateButtonStates() {
+                // Show previous button if not at the start
+                if (slider.scrollLeft > 0) {
+                    prevBtn.style.opacity = '1';
+                    prevBtn.style.pointerEvents = 'auto';
+                } else {
+                    prevBtn.style.opacity = '0.5';
+                    prevBtn.style.pointerEvents = 'none';
+                }
+                
+                // Show next button if not at the end
+                if (slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 10)) {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.pointerEvents = 'auto';
+                } else {
+                    nextBtn.style.opacity = '0.5';
+                    nextBtn.style.pointerEvents = 'none';
+                }
+            }
+            
+            // Initial state
+            updateButtonStates();
+            
+            // Update on scroll
+            slider.addEventListener('scroll', updateButtonStates);
+            
+            // Update on window resize
+            window.addEventListener('resize', updateButtonStates);
+        });
+   
+// Coming Soon Popup Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const comingSoonOverlay = document.getElementById('comingSoonOverlay');
+    const comingSoonPopup = document.getElementById('comingSoonPopup');
+    const notifyForm = comingSoonPopup.querySelector('form');
+    
+    // Function to show the coming soon popup
+    function showComingSoonPopup() {
+        comingSoonOverlay.style.display = 'block';
+        comingSoonPopup.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    // Function to hide the coming soon popup
+    function hideComingSoonPopup() {
+        comingSoonOverlay.style.display = 'none';
+        comingSoonPopup.style.display = 'none';
+        document.body.style.overflow = ''; // Enable scrolling
+    }
+    
+    // Show popup when page loads (you can change this trigger as needed)
+    setTimeout(showComingSoonPopup, 2000); // Shows after 2 seconds
+    
+    // Close popup when clicking on overlay
+    comingSoonOverlay.addEventListener('click', hideComingSoonPopup);
+    
+    // Handle form submission
+    notifyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const emailInput = this.querySelector('input[type="email"]');
+        const phoneInput = this.querySelector('input[type="tel"]');
+        
+        // Simple validation
+        if (!emailInput.value || !phoneInput.value) {
+            alert('Please fill in both email and phone fields.');
+            return;
+        }
+        
+        // Here you would typically send the data to your server
+        // For now, we'll just show a confirmation and close the popup
+        alert('Thank you! We will notify you when we launch.');
+        hideComingSoonPopup();
+        
+        // Reset form
+        this.reset();
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && comingSoonPopup.style.display === 'block') {
+            hideComingSoonPopup();
+        }
+    });
+});
